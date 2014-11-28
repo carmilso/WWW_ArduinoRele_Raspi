@@ -1,3 +1,5 @@
+//Controlar pereta
+
 var http = require('http');
 var fs = require('fs');
 var ip = require('ip');
