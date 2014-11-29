@@ -53,19 +53,30 @@ function creaServer(port, metode){
 }
 
 
-/************** TIPUS DE SERVIDORS **************/
+/************** MÈTODES **************/
 
-var serverGet = http.createServer(function(request, response){
+function recuperaIP(request){
   var ip = request.connection.remoteAddress;
   console.log("Client connectat -> " + ip);
   var data = new Date().toString();
   console.log(data);
 
   if(opcions.log != undefined)
+    escriuLog(ip, data);
+}
+
+function escriuLog(ip, data){
   fs.appendFile(opcions.log + '.log', ip + " -> " + data + '\n', function(err){
     if(err)
       console.log("Error en escriure el log -> " + err);
   });
+}
+
+
+/************** TIPUS DE SERVIDORS **************/
+
+var serverGet = http.createServer(function(request, response){
+  recuperaIP(request);
 
   if(request.method == "GET"){
     var query = url.parse(request.url, true).query;
@@ -76,17 +87,7 @@ var serverGet = http.createServer(function(request, response){
 });
 
 var serverPost = http.createServer(function(request, response){
-  var ip = request.connection.remoteAddress;
-  console.log("Client connectat -> " + ip);
-  var data = new Date().toString();
-  console.log(data);
-
-  if(opcions.log != undefined){
-    fs.appendFile(opcions.log + '.log', ip + " -> " + data + '\n', function(err){
-      if(err)
-        console.log("Error en escriure el log -> " + err);
-    });
-  }
+  recuperaIP(request);
 
   if(request.method == "GET"){
     response.writeHead(200, {'Content-Type': 'text/html'});
