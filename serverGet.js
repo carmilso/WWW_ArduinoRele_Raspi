@@ -1,4 +1,5 @@
-//Controlar pereta
+//Controlar pereta -> Mètode Get
+
 
 var http = require('http');
 var url = require('url');
