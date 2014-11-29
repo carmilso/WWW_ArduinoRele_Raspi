@@ -1,4 +1,5 @@
-//Controlar pereta
+//Controlar pereta -> Mètode Post
+
 
 var http = require('http');
 var fs = require('fs');
