@@ -88,11 +88,10 @@ var serverGet = http.createServer(function(request, response){
   response.end(formGet);
 
   var query = url.parse(request.url, true).query;
-  var variableget = (query.var1 != undefined) ? query.var1 : "";
-  var variableget2 = (query.var2 != undefined) ? query.var2 : "";
+  var variableget = query.opcio;
 
-  console.log("\nVariable get: " + variableget);
-  console.log("Variable get: " + variableget2);
+  if(variableget != undefined)
+    console.log("\nVariable get: " + parseInt(variableget));
 });
 
 var serverPost = http.createServer(function(request, response){
