@@ -43,6 +43,8 @@ var opcions = stdio.getopt({
 var formGet = fs.readFileSync('formGet.html');
 var formPost = fs.readFileSync('formPost.html');
 
+var requestActual = "";
+
 function creaServer(port, metode){
   server = (metode.toLowerCase() == "get") ? serverGet : serverPost;
   server.listen(parseInt(port), function(){
@@ -62,6 +64,10 @@ function recuperaIP(request){
 
   if(opcions.log != undefined)
     escriuLog(ip, data);
+
+  reqActual = request;
+
+  return ip;
 }
 
 function escriuLog(ip, data){
@@ -75,14 +81,18 @@ function escriuLog(ip, data){
 /************** TIPUS DE SERVIDORS **************/
 
 var serverGet = http.createServer(function(request, response){
-  recuperaIP(request);
+  if(requestActual != request)
+    recuperaIP(request);
 
-  if(request.method == "GET"){
-    var query = url.parse(request.url, true).query;
-    var variableget = query.variableget;
-    response.writeHead(200, {'Content-Type': 'text/html'});
-    response.end(variableget);
-  }
+  response.writeHead(200, {'Content-Type': 'text/html'});
+  response.end(formGet);
+
+  var query = url.parse(request.url, true).query;
+  var variableget = (query.var1 != undefined) ? query.var1 : "";
+  var variableget2 = (query.var2 != undefined) ? query.var2 : "";
+
+  console.log("\nVariable get: " + variableget);
+  console.log("Variable get: " + variableget2);
 });
 
 var serverPost = http.createServer(function(request, response){
