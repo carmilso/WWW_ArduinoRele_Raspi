@@ -91,7 +91,7 @@ var serverGet = http.createServer(function(request, response){
   var variableget = query.opcio;
 
   if(variableget != undefined)
-    console.log("\nVariable get: " + parseInt(variableget));
+    console.log("\nVariable get: " + variableget);
 });
 
 var serverPost = http.createServer(function(request, response){

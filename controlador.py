@@ -15,7 +15,7 @@ except:
 if len(sys.argv) != 2:
     sys.exit()
 
-ordre = int(sys.argv[1])
+ordre = sys.argv[1]
 arduino.write(ordre)
 arduino.close()
 
