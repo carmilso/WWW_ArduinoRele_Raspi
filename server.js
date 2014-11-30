@@ -45,6 +45,9 @@ var formPost = fs.readFileSync('formPost.html');
 
 var requestActual = "";
 
+
+/************** MÈTODES **************/
+
 function creaServer(port, metode){
   server = (metode.toLowerCase() == "get") ? serverGet : serverPost;
   server.listen(parseInt(port), function(){
@@ -52,9 +55,6 @@ function creaServer(port, metode){
     + ":" + port + "  Mètode: " + metode + '\n');
   });
 }
-
-
-/************** MÈTODES **************/
 
 function recuperaIP(request){
   var ip = request.connection.remoteAddress;
