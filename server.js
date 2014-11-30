@@ -21,8 +21,7 @@ var stdio = require('stdio');
 var opcions = stdio.getopt({
   'port': {
     key: 'p',
-    description: 'Port del servidor',
-    mandatory: true,
+    description: 'Port del servidor (4444 per defecte)',
     args: 1
   },
   'metode': {
@@ -98,4 +97,7 @@ var serverPost = http.createServer(function(request, response){
 
 /************** INICI DEL PROGRAMA **************/
 
-creaServer(opcions.port, opcions.metode);
+if(opcions.port != undefined)
+  creaServer(opcions.port, opcions.metode);
+else
+  creaServer(4444, opcions.metode);
