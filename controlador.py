@@ -17,8 +17,11 @@ if len(sys.argv) != 2:
     sys.exit()
 
 ordre = sys.argv[1]
+
 print "S'ha rebut un", ordre
-arduino.write(ordre)
+arduino.write('0')
+time.sleep(0.25)
 arduino.close()
+print "acabat"
 
 sys.exit()
