@@ -46,8 +46,6 @@ var formPost = fs.readFileSync('formPost.html');
 
 var requestActual = "";
 
-var python = "";
-
 
 /************** MÈTODES **************/
 
