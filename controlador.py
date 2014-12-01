@@ -3,6 +3,7 @@
 
 import sys
 import serial
+import time
 
 arduino = serial.Serial()
 
@@ -16,6 +17,7 @@ if len(sys.argv) != 2:
     sys.exit()
 
 ordre = sys.argv[1]
+print "S'ha rebut un", ordre
 arduino.write(ordre)
 arduino.close()
 

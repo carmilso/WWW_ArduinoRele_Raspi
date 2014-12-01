@@ -14,6 +14,7 @@ var url = require('url');
 var fs = require('fs');
 var ip = require('ip');
 var stdio = require('stdio');
+var exec = require('child_process').exec;
 
 
 /************** ARGUMENTS DEL SERVIDOR **************/
@@ -90,8 +91,13 @@ var serverGet = http.createServer(function(request, response){
   var query = url.parse(request.url, true).query;
   var variableget = query.opcio;
 
-  if(variableget != undefined)
+  if(variableget != undefined){
     console.log("\nVariable get: " + variableget);
+    console.log();
+    exec('python controlador.py ' + variableget, function(err, stdout, stderr){
+      console.log("Resposta Raspberry -> " + stdout);
+    });
+  }
 });
 
 var serverPost = http.createServer(function(request, response){
