@@ -19,6 +19,7 @@ if len(sys.argv) != 2:
 ordre = sys.argv[1]
 
 print "S'ha rebut un", ordre
+time.sleep(5)
 arduino.write('0')
 time.sleep(0.25)
 arduino.close()
