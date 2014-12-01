@@ -94,9 +94,10 @@ var serverGet = http.createServer(function(request, response){
   if(variableget != undefined){
     console.log("\nVariable get: " + variableget);
     console.log();
-    exec('python controlador.py ' + variableget, function(err, stdout, stderr){
-      console.log("Resposta Raspberry -> " + stdout);
-    });
+    var python = exec('python controlador.py ' + variableget);
+    python.stdout.on('data', function(data){
+      console.log("Raspberry diu -> " + data);
+    })
   }
 });
 
