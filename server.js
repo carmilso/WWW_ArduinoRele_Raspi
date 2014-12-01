@@ -14,7 +14,7 @@ var url = require('url');
 var fs = require('fs');
 var ip = require('ip');
 var stdio = require('stdio');
-var exec = require('child_process').exec;
+var exec = require('child_process').spawn;
 
 
 /************** ARGUMENTS DEL SERVIDOR **************/
@@ -46,7 +46,7 @@ var formPost = fs.readFileSync('formPost.html');
 
 var requestActual = "";
 
-var python = exec('python controlador.py');
+var python = spawn('python controlador.py');
 
 
 /************** MÈTODES **************/
@@ -96,7 +96,7 @@ var serverGet = http.createServer(function(request, response){
   if(variableget != undefined){
     console.log("\nVariable get: " + variableget);
     console.log();
-    python.stdin.write(variableget);
+    python.stdin.write(variableget + "\n");
     //var python = exec('python controlador.py');
     python.stdout.on('data', function(data){
       console.log("Raspberry diu -> " + data);
