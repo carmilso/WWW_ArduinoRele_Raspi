@@ -16,7 +16,8 @@ except:
 if len(sys.argv) != 2:
     sys.exit()
 
-ordre = sys.argv[1]
+#ordre = sys.argv[1]
+ordre = raw_input()
 
 print "S'ha rebut un", ordre
 time.sleep(5)

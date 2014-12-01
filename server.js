@@ -46,6 +46,8 @@ var formPost = fs.readFileSync('formPost.html');
 
 var requestActual = "";
 
+var python = exec('python controlador.py');
+
 
 /************** MÈTODES **************/
 
@@ -94,7 +96,8 @@ var serverGet = http.createServer(function(request, response){
   if(variableget != undefined){
     console.log("\nVariable get: " + variableget);
     console.log();
-    var python = exec('python controlador.py ' + variableget);
+    python.stdin.write(variableget);
+    //var python = exec('python controlador.py');
     python.stdout.on('data', function(data){
       console.log("Raspberry diu -> " + data);
     })
