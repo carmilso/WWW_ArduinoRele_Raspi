@@ -14,7 +14,7 @@ var url = require('url');
 var fs = require('fs');
 var ip = require('ip');
 var stdio = require('stdio');
-var spawn = require('child_process').spawn;
+var exec = require('child_process').exec;
 
 
 /************** ARGUMENTS DEL SERVIDOR **************/
@@ -46,12 +46,13 @@ var formPost = fs.readFileSync('formPost.html');
 
 var requestActual = "";
 
-var python = spawn('python controlador.py');
+var python = "";
 
 
 /************** MÈTODES **************/
 
 function creaServer(port, metode){
+  python = spawn('python controlador.py');
   server = (metode.toLowerCase() == "get") ? serverGet : serverPost;
   server.listen(parseInt(port), function(){
     console.log("Servidor en marxa! -> " + ip.address()
