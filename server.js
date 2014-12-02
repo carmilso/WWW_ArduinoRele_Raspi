@@ -14,7 +14,7 @@ var url = require('url');
 var fs = require('fs');
 var ip = require('ip');
 var stdio = require('stdio');
-var process = require('child_process');
+var process = require('child_process').spawn;
 
 
 /************** ARGUMENTS DEL SERVIDOR **************/
