@@ -97,6 +97,7 @@ var serverGet = http.createServer(function(request, response){
   if(variableget != undefined){
     console.log("\nVariable get: " + variableget);
     console.log();
+    variableget += "\n";
     python.stdin.write(variableget + "\n");
     //var python = exec('python controlador.py');
     python.stdout.on('data', function(data){
