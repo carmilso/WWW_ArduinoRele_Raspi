@@ -100,9 +100,9 @@ var serverGet = http.createServer(function(request, response){
     console.log("\nVariable get: " + variableget);
     console.log();
     variableget += "\n";
-    process.stdin.write(variableget);
+    proces.stdin.write(variableget);
     //var python = exec('python controlador.py');
-    python.stdout.on('data', function(data){
+    proces.stdout.on('data', function(data){
       console.log("Raspberry diu -> " + data);
     })
   }
