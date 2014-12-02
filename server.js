@@ -50,7 +50,7 @@ var requestActual = "";
 /************** MÈTODES **************/
 
 function creaServer(port, metode){
-  python = process.spawn('python [controlador.py]');
+  python = process.spawn('python', ['controlador.py']);
 
   server = (metode.toLowerCase() == "get") ? serverGet : serverPost;
 
