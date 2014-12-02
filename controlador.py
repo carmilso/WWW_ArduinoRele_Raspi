@@ -19,7 +19,7 @@ if len(sys.argv) != 2:
 #ordre = sys.argv[1]
 
 while 1:
-	ordre = input()
+	ordre = raw_input()
 
 	print "S'ha rebut un", ordre
 	#time.sleep(5)
