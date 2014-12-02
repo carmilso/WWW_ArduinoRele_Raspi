@@ -14,7 +14,9 @@ var url = require('url');
 var fs = require('fs');
 var ip = require('ip');
 var stdio = require('stdio');
-var exec = require('child_process').exec;
+var spawn = require('child_process').spawn;
+
+var proces = spawn('python', ['controlador.py']);
 
 
 /************** ARGUMENTS DEL SERVIDOR **************/
@@ -50,7 +52,7 @@ var requestActual = "";
 /************** MÈTODES **************/
 
 function creaServer(port, metode){
-  python = exec('python controlador.py');
+  //python = exec('python controlador.py');
 
   server = (metode.toLowerCase() == "get") ? serverGet : serverPost;
 
@@ -98,7 +100,7 @@ var serverGet = http.createServer(function(request, response){
     console.log("\nVariable get: " + variableget);
     console.log();
     variableget += "\n";
-    python.stdin.write(variableget + "\n");
+    process.stdin.write(variableget);
     //var python = exec('python controlador.py');
     python.stdout.on('data', function(data){
       console.log("Raspberry diu -> " + data);
