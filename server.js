@@ -14,7 +14,7 @@ var url = require('url');
 var fs = require('fs');
 var ip = require('ip');
 var stdio = require('stdio');
-var exec = require('child_process');
+var process = require('child_process');
 
 
 /************** ARGUMENTS DEL SERVIDOR **************/
@@ -50,7 +50,7 @@ var requestActual = "";
 /************** MÈTODES **************/
 
 function creaServer(port, metode){
-  python = exec('python controlador.py');
+  python = process.spawn('python controlador.py');
 
   server = (metode.toLowerCase() == "get") ? serverGet : serverPost;
 
