@@ -22,7 +22,7 @@ while 1:
 	ordre = input()
 
 	print "S'ha rebut un", ordre
-	time.sleep(5)
+	#time.sleep(5)
 	arduino.write('0')
 	time.sleep(0.25)
 arduino.close()

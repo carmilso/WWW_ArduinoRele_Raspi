@@ -14,7 +14,7 @@ var url = require('url');
 var fs = require('fs');
 var ip = require('ip');
 var stdio = require('stdio');
-var exec = require('child_process').exec;
+var exec = require('child_process');
 
 
 /************** ARGUMENTS DEL SERVIDOR **************/
@@ -51,7 +51,9 @@ var requestActual = "";
 
 function creaServer(port, metode){
   python = exec('python controlador.py');
+
   server = (metode.toLowerCase() == "get") ? serverGet : serverPost;
+
   server.listen(parseInt(port), function(){
     console.log("Servidor en marxa! -> " + ip.address()
     + ":" + port + "  Mètode: " + metode + '\n');
