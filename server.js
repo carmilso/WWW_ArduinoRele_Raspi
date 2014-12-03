@@ -7,6 +7,7 @@
 */
 
 
+
 /************** MÒDULS **************/
 
 var http = require('http');
@@ -14,9 +15,7 @@ var url = require('url');
 var fs = require('fs');
 var ip = require('ip');
 var stdio = require('stdio');
-var spawn = require('child_process').spawn;
-
-var proces = spawn('python', ['controlador.py']);
+var PythonShell = require('python-shell');
 
 
 /************** ARGUMENTS DEL SERVIDOR **************/
@@ -47,6 +46,14 @@ var formGet = fs.readFileSync('formGet.html');
 var formPost = fs.readFileSync('formPost.html');
 
 var requestActual = "";
+
+var options = {
+  mode: 'text',
+  pythonPath: '/usr/bin/python',
+  scriptPath: '/home/pi/WWW_ArduinoRele_Raspi'
+};
+
+var pyshell = new PythonShell('controlador.py', options);
 
 
 /************** MÈTODES **************/
@@ -97,14 +104,9 @@ var serverGet = http.createServer(function(request, response){
   var variableget = query.opcio;
 
   if(variableget != undefined){
-    console.log("\nVariable get: " + variableget);
-    console.log();
     variableget += "\n";
-    proces.stdin.write(variableget);
-    //var python = exec('python controlador.py');
-    proces.stdout.on('data', function(data){
-      console.log("Raspberry diu -> " + data);
-    })
+    console.log("\nVariable get: " + variableget);
+    pyshell.send(variableget);
   }
 });
 

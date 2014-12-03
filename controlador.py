@@ -5,6 +5,7 @@ import sys
 import serial
 import time
 
+
 arduino = serial.Serial()
 
 try:
@@ -13,19 +14,12 @@ except:
 	print "No s'ha pogut connectar a l'arduino"
 	sys.exit()
 
-if len(sys.argv) != 2:
-    sys.exit()
-
-#ordre = sys.argv[1]
 
 while 1:
-	ordre = raw_input()
-	#ordre = sys.stdin.readLines()
-	print "S'ha rebut un", ordre
-	#time.sleep(5)
-	arduino.write('0')
-	time.sleep(0.25)
+  ordre = raw_input()
+  print ordre
+  arduino.write(ordre)
+	
+	
 arduino.close()
-print "acabat"
-
 sys.exit()
