@@ -8,5 +8,4 @@ Raspberry i l'Arduino.
 Mètodes http get i post diferenciats en dos servidors.
 
 /********************* v 1.0 *********************\
-
-	              Controlar una pereta.
+Controlar una pereta.
