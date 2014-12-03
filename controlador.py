@@ -17,9 +17,10 @@ except:
 
 while 1:
   ordre = raw_input()
-  print ordre
+  if ordre == 'acabar':
+	break
   arduino.write(ordre)
-	
-	
+
+
 arduino.close()
 sys.exit()
