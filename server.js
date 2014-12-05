@@ -79,7 +79,7 @@ function recuperaIP(request){
   var data = new Date().toString();
   console.log(data);
 
-  if(opcionsNodeNode.log != undefined)
+  if(opcionsNode.log != undefined)
     escriuLog(ip, data);
 
   ipActual = ip;
