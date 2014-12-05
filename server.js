@@ -104,7 +104,7 @@ var serverGet = http.createServer(function(request, response){
     recuperaIP(request);
 
   response.writeHead(200, {'Content-Type': 'text/html'});
-  response.end(formGet);
+  response.end(form);
 
   var query = url.parse(request.url, true).query;
   var variableget = query.opcio;
@@ -121,7 +121,7 @@ var serverPost = http.createServer(function(request, response){
 
   if(request.method == "GET"){
     response.writeHead(200, {'Content-Type': 'text/html'});
-    response.end(formPost);
+    response.end(form);
   }
 });
 
