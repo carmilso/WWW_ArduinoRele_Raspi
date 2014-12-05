@@ -20,7 +20,7 @@ var PythonShell = require('python-shell');
 
 /************** ARGUMENTS DEL SERVIDOR **************/
 
-var opcions = stdio.getopt({
+var opcionsNode = stdio.getopt({
   'port': {
     key: 'p',
     description: 'Port del servidor (4444 per defecte)',
@@ -42,24 +42,24 @@ var opcions = stdio.getopt({
 
 /************** INICIALITZACIÓ **************/
 
-var formGet = fs.readFileSync('formGet.html');
-var formPost = fs.readFileSync('formPost.html');
+var form = (opcionsNode.metode.toLowerCase() == "get") ?
+            fs.readFileSync('formGet.html') :
+            fs.readFileSync('formPost.html');
 
+var ipActual = "";
 var requestActual = "";
 
-var options = {
+var opcionsPython = {
   mode: 'text',
   pythonPath: '/usr/bin/python',
   scriptPath: '/home/pi/WWW_ArduinoRele_Raspi'
 };
 
-var pyshell = new PythonShell('controlador.py', options);
-
 
 /************** MÈTODES **************/
 
 function creaServer(port, metode){
-  //python = exec('python controlador.py');
+  iniciaControlador();
 
   server = (metode.toLowerCase() == "get") ? serverGet : serverPost;
 
@@ -69,22 +69,27 @@ function creaServer(port, metode){
   });
 }
 
+function iniciaControlador(){
+  pyshell = new PythonShell('controlador.py', opcionsPython);
+}
+
 function recuperaIP(request){
   var ip = request.connection.remoteAddress;
   console.log("Client connectat -> " + ip);
   var data = new Date().toString();
   console.log(data);
 
-  if(opcions.log != undefined)
+  if(opcionsNodeNode.log != undefined)
     escriuLog(ip, data);
 
+  ipActual = ip;
   reqActual = request;
 
   return ip;
 }
 
 function escriuLog(ip, data){
-  fs.appendFile(opcions.log + '.log', ip + " -> " + data + '\n', function(err){
+  fs.appendFile(opcionsNode.log + '.log', ip + " -> " + data + '\n', function(err){
     if(err)
       console.log("Error en escriure el log -> " + err);
   });
@@ -94,7 +99,8 @@ function escriuLog(ip, data){
 /************** TIPUS DE SERVIDORS **************/
 
 var serverGet = http.createServer(function(request, response){
-  if(requestActual != request)
+  if(requestActual != request &&
+          ipActual != request.connection.remoteAddress)
     recuperaIP(request);
 
   response.writeHead(200, {'Content-Type': 'text/html'});
@@ -104,7 +110,7 @@ var serverGet = http.createServer(function(request, response){
   var variableget = query.opcio;
 
   if(variableget != undefined){
-    variableget += "\n";
+    variableget += '\n';
     console.log("\nVariable get: " + variableget);
     pyshell.send(variableget);
   }
@@ -122,7 +128,7 @@ var serverPost = http.createServer(function(request, response){
 
 /************** INICI DEL PROGRAMA **************/
 
-if(opcions.port != undefined)
-  creaServer(opcions.port, opcions.metode);
+if(opcionsNode.port != undefined)
+  creaServer(opcionsNode.port, opcionsNode.metode);
 else
-  creaServer(4444, opcions.metode);
+  creaServer(4444, opcionsNode.metode);
