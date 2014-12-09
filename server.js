@@ -56,7 +56,7 @@ var opcionsPython = {
 };
 
 process.on('SIGINT', function(){
-  pyshell.send('e');
+  pyshell.send('e\n');
   pyshell.end();
   console.log("\nServidor desconnectat.");
 });
