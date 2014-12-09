@@ -59,6 +59,7 @@ process.on('SIGINT', function(){
   pyshell.send('e\n');
   pyshell.end();
   console.log("\nServidor desconnectat.");
+  process.exit(0);
 });
 
 
