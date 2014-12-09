@@ -55,13 +55,6 @@ var opcionsPython = {
   scriptPath: '/home/pi/WWW_ArduinoRele_Raspi'
 };
 
-process.on('SIGINT', function(){
-  pyshell.send('e\n');
-  pyshell.end();
-  console.log("\nServidor desconnectat.");
-  process.exit(0);
-});
-
 
 /************** MÈTODES **************/
 
@@ -74,10 +67,21 @@ function creaServer(port, metode){
     console.log("Servidor en marxa! -> " + ip.address()
     + ":" + port + "  Mètode: " + metode + '\n');
   });
+
+  process.on('SIGINT', function(){
+    acabaControlador();
+    console.log("\nServidor desconnectat.");
+    process.exit(0);
+  });
 }
 
 function iniciaControlador(){
   pyshell = new PythonShell('controlador.py', opcionsPython);
+}
+
+function acabaControlador(){
+  pyshell.send('e\n');
+  pyshell.end(0);
 }
 
 function recuperaIP(request){
