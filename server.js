@@ -55,6 +55,11 @@ var opcionsPython = {
   scriptPath: '/home/pi/WWW_ArduinoRele_Raspi'
 };
 
+process.on('SIGINT', function(){
+  pyshell.send('e');
+  console.log("\nServidor desconnectat.");
+});
+
 
 /************** MÈTODES **************/
 

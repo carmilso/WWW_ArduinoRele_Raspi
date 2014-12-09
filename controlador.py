@@ -17,7 +17,7 @@ except:
 
 while 1:
   ordre = raw_input()
-  if ordre == 'acabar':
+  if ordre == 'e':
 	break
   arduino.write(ordre)
 
