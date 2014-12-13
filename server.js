@@ -59,7 +59,9 @@ var opcionsPython = {
 /************** MÈTODES **************/
 
 function creaServer(port, metode){
+  console.log("Iniciant controlador...");
   iniciaControlador();
+  console.log("Controlador iniciat.");
 
   server = (metode.toLowerCase() == "get") ? serverGet : serverPost;
 
@@ -80,10 +82,7 @@ function creaServer(port, metode){
 }
 
 function iniciaControlador(){
-  console.log("Iniciant controlador...");
-  pyshell = new PythonShell('controlador.py', opcionsPython, function(){
-    console.log("Controlador iniciat.");
-  });
+  pyshell = new PythonShell('controlador.py', opcionsPython);
 }
 
 function acabaControlador(){
