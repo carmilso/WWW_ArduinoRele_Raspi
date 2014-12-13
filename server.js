@@ -65,7 +65,7 @@ function creaServer(port, metode){
 
   server.listen(parseInt(port), function(){
     console.log("Servidor en marxa! ->", ip.address()
-    , ":", port, "  Mètode:", metode + '\n');
+    + ":", port, "  Mètode:", metode + '\n');
   });
 
   process.on('SIGINT', function(){
@@ -91,7 +91,7 @@ function acabaControlador(){
 
 function recuperaIP(request){
   var ip = request.connection.remoteAddress;
-  console.log("Client connectat -> " + ip);
+  console.log("Client connectat ->", ip);
   var data = new Date().toString();
   console.log(data);
 
@@ -107,7 +107,7 @@ function recuperaIP(request){
 function escriuLog(ip, data){
   fs.appendFile(opcionsNode.log + '.log', ip + " -> " + data + '\n', function(err){
     if(err)
-      console.log("Error en escriure el log -> " + err);
+      console.log("Error en escriure el log ->", err);
   });
 }
 
@@ -127,7 +127,7 @@ var serverGet = http.createServer(function(request, response){
 
   if(variableget != undefined){
     variableget += '\n';
-    console.log("\nVariable get: " + variableget);
+    console.log("\nVariable get:", variableget);
     pyshell.send(variableget);
   }
 });
