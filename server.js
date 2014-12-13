@@ -80,7 +80,10 @@ function creaServer(port, metode){
 }
 
 function iniciaControlador(){
-  pyshell = new PythonShell('controlador.py', opcionsPython);
+  console.log("Iniciant controlador...");
+  pyshell = new PythonShell('controlador.py', opcionsPython, function(){
+    console.log("Controlador iniciat.");
+  });
 }
 
 function acabaControlador(){
@@ -93,7 +96,7 @@ function recuperaIP(request){
   var ip = request.connection.remoteAddress;
   console.log("Client connectat ->", ip);
   var data = new Date().toString();
-  console.log(data);
+  console.log(data + "\n");
 
   if(opcionsNode.log != undefined)
     escriuLog(ip, data);
@@ -127,7 +130,7 @@ var serverGet = http.createServer(function(request, response){
 
   if(variableget != undefined){
     variableget += '\n';
-    console.log("\nVariable get:", variableget);
+    console.log("Variable get:", variableget);
     pyshell.send(variableget);
   }
 });
