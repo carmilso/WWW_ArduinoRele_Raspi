@@ -144,8 +144,6 @@ var serverPost = http.createServer(function(request, response){
 
 /************** INICI DEL PROGRAMA **************/
 
-console.log("Iniciant servidor...");
-
 if(opcionsNode.port != undefined)
   creaServer(opcionsNode.port, opcionsNode.metode);
 else
