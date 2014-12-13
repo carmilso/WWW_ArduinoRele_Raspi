@@ -65,7 +65,7 @@ function creaServer(port, metode){
 
   server.listen(parseInt(port), function(){
     console.log("Servidor en marxa! ->", ip.address()
-    + ":", port, "  Mètode:", metode + '\n');
+    + ":" + port, "  Mètode:", metode + '\n');
   });
 
   process.on('SIGINT', function(){
