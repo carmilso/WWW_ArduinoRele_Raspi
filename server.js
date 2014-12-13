@@ -69,9 +69,13 @@ function creaServer(port, metode){
   });
 
   process.on('SIGINT', function(){
-    acabaControlador();
     console.log("\nServidor desconnectat.");
     process.exit(0);
+  });
+  
+  process.on('exit', function(code){
+    acabaControlador();
+    console.log("Codi de sortida:", code);
   });
 }
 
@@ -82,6 +86,7 @@ function iniciaControlador(){
 function acabaControlador(){
   pyshell.send('e\n');
   pyshell.end(0);
+  console.log("Controlador desconnectat.");
 }
 
 function recuperaIP(request){
