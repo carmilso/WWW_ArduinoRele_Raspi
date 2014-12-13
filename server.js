@@ -64,15 +64,15 @@ function creaServer(port, metode){
   server = (metode.toLowerCase() == "get") ? serverGet : serverPost;
 
   server.listen(parseInt(port), function(){
-    console.log("Servidor en marxa! -> " + ip.address()
-    + ":" + port + "  Mètode: " + metode + '\n');
+    console.log("Servidor en marxa! ->", ip.address()
+    , ":", port, "  Mètode:", metode + '\n');
   });
 
   process.on('SIGINT', function(){
     console.log("\nServidor desconnectat.");
     process.exit(0);
   });
-  
+
   process.on('exit', function(code){
     acabaControlador();
     console.log("Codi de sortida:", code);
