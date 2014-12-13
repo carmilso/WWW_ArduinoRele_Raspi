@@ -59,9 +59,7 @@ var opcionsPython = {
 /************** MÈTODES **************/
 
 function creaServer(port, metode){
-  console.log("Iniciant controlador...");
   iniciaControlador();
-  console.log("Controlador iniciat.");
 
   server = (metode.toLowerCase() == "get") ? serverGet : serverPost;
 
@@ -145,6 +143,8 @@ var serverPost = http.createServer(function(request, response){
 
 
 /************** INICI DEL PROGRAMA **************/
+
+console.log("Iniciant servidor...");
 
 if(opcionsNode.port != undefined)
   creaServer(opcionsNode.port, opcionsNode.metode);
