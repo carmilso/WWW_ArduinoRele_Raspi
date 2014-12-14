@@ -48,6 +48,7 @@ var form = (opcionsNode.metode.toLowerCase() == "get") ?
 
 var ipActual = "";
 var requestActual = "";
+var estatPereta = 1;
 
 var opcionsPython = {
   mode: 'text',
@@ -126,6 +127,7 @@ var serverGet = http.createServer(function(request, response){
   var variableget = query.opcio;
 
   if(variableget != undefined){
+    estatPereta = variableget;
     variableget += '\n';
     console.log("Variable get:", variableget);
     pyshell.send(variableget);
