@@ -48,7 +48,7 @@ var form = (opcionsNode.metode.toLowerCase() == "get") ?
 
 var ipActual = "";
 var requestActual = "";
-var estatPereta = 1;
+var estatPereta = '1';
 
 var opcionsPython = {
   mode: 'text',
@@ -112,6 +112,27 @@ function escriuLog(ip, data){
   });
 }
 
+function dibuixaHtml(estat){
+  var html = '<html>';
+  html += '<head>';
+  html += '<title> Servidor http Raspberry Pi </title>';
+  html += '</head>';
+  html += '<body>';
+  html += '<img src="http://192.168.1.10:8081"/>';
+  html += '<br><br> Estat de la pereta: ' + estat;
+  html += '<div align="left">';
+  html += '<form method=get>';
+  html += '<br>';
+  html += '<button type="submit" style="width:100px; height:35px" name=opcio value=0> Encendre';
+  html += '<button type="submit" style="margin-left:20px; width:100px; height:35px" name=opcio value=1> Apagar';
+  html += '</form>';
+  html += '</div>';
+  html += '</body>';
+  html += '</html>';
+
+  return html;
+}
+
 
 /************** TIPUS DE SERVIDORS **************/
 
@@ -121,7 +142,8 @@ var serverGet = http.createServer(function(request, response){
     recuperaIP(request);
 
   response.writeHead(200, {'Content-Type': 'text/html'});
-  response.end(form);
+  var estat = (estatPereta == '0') ? "encesa" : "apagada"
+  response.end(dibuixaHtml(estat));
 
   var query = url.parse(request.url, true).query;
   var variableget = query.opcio;
