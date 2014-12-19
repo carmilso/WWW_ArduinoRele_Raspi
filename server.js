@@ -118,7 +118,7 @@ function dibuixaHtml(estat){
   html += '<title> Servidor http Raspberry Pi </title>';
   html += '</head>';
   html += '<body>';
-  html += '<img src="http://192.168.1.10:4444"/>';
+  html += '<img src="http://62.117.232.31:8081"/>';
   html += '<br><br> Estat de la pereta: ' + estat;
   html += '<div align="left">';
   html += '<form method=get>';
@@ -153,7 +153,7 @@ var serverGet = http.createServer(function(request, response){
   }
 
   response.writeHead(200, {'Content-Type': 'text/html'});
-  var estat = (estatPereta == '0') ? "apagada" : "encesa"
+  var estat = (estatPereta == '0') ? "encesa" : "apagada"
   response.end(dibuixaHtml(estat));
 
 });
