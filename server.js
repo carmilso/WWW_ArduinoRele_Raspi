@@ -134,7 +134,7 @@ function dibuixaHtml(estat){
 }
 
 
-/************** TIPUS DE SERVIDORS **************/
+/************** SERVIDORS **************/
 
 var serverGet = http.createServer(function(request, response){
   if(requestActual != request &&
