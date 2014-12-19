@@ -141,20 +141,23 @@ var serverGet = http.createServer(function(request, response){
           ipActual != request.connection.remoteAddress)
     recuperaIP(request);
 
-  response.writeHead(200, {'Content-Type': 'text/html'});
-  var estat = (estatPereta == '0') ? "encesa" : "apagada"
-  response.end(dibuixaHtml(estat));
-
   var query = url.parse(request.url, true).query;
   var variableget = query.opcio;
 
   if(variableget != undefined){
     estatPereta = variableget;
+    console.log(estatPereta);
     variableget += '\n';
     console.log("Variable get:", variableget);
     pyshell.send(variableget);
   }
+
+  response.writeHead(200, {'Content-Type': 'text/html'});
+  var estat = (estatPereta == '0') ? "apagada" : "encesa"
+  response.end(dibuixaHtml(estat));
+
 });
+
 
 var serverPost = http.createServer(function(request, response){
   recuperaIP(request);
