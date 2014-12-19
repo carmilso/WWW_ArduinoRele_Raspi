@@ -118,7 +118,7 @@ function dibuixaHtml(estat){
   html += '<title> Servidor http Raspberry Pi </title>';
   html += '</head>';
   html += '<body>';
-  html += '<img src="http://192.168.1.10:8081"/>';
+  html += '<img src="http://192.168.1.10:4444"/>';
   html += '<br><br> Estat de la pereta: ' + estat;
   html += '<div align="left">';
   html += '<form method=get>';
