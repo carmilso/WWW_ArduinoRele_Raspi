@@ -42,10 +42,6 @@ var opcionsNode = stdio.getopt({
 
 /************** INICIALITZACIÓ **************/
 
-var form = (opcionsNode.metode.toLowerCase() == "get") ?
-            fs.readFileSync('formGet.html') :
-            fs.readFileSync('formPost.html');
-
 var ipActual = "";
 var requestActual = "";
 var estatPereta = '1';
