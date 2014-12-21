@@ -82,6 +82,10 @@ function creaServer(port, metode){
 
 function iniciaControlador(){
   pyshell = new PythonShell('controlador.py', opcionsPython);
+  pyshell.on('error', function(error){
+    estatPereta = 'error';
+    console.log("Error en la comunicació amb l'Arduino. Reiniciar el servidor.\n");
+  });
 }
 
 function acabaControlador(){
@@ -153,7 +157,8 @@ var serverGet = http.createServer(function(request, response){
   }
 
   response.writeHead(200, {'Content-Type': 'text/html'});
-  var estat = (estatPereta == '0') ? "encesa" : "apagada"
+  var estat = (estatPereta == '0') ? "encesa" : "apagada";
+  estat = (estatPereta == 'error') ? "error amb Arduino" : estat;
   response.end(dibuixaHtml(estat));
 
 });
