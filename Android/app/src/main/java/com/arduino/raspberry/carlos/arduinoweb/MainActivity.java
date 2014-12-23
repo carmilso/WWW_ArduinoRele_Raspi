@@ -14,14 +14,20 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+
 
 public class MainActivity extends ActionBarActivity {
 
     private Button button_encendre;
     private Button button_apagar;
 
-    protected HttpURLConnection urlEncendre;
-    protected HttpURLConnection urlApagar;
+    protected HttpURLConnection URL;
+
+    public static TextView estat;
+
+
 
 
     @Override
@@ -44,6 +50,12 @@ public class MainActivity extends ActionBarActivity {
                 apagar(null);
             }
         });
+
+        estat = (TextView) findViewById(R.id.estat_textView);
+    }
+
+    public static void setText(String text) {
+        estat.setText(text);
     }
 
 
@@ -77,47 +89,103 @@ public class MainActivity extends ActionBarActivity {
         new apaga().execute();
     }
 
-    class encen extends AsyncTask<Void, Void, Void> {
-        private Void[] voids;
+    class encen extends AsyncTask<String, Float, Integer> {
+        private int exc = 0;
+        BufferedInputStream in;
+        String tornada = "";
+        int code;
 
-        protected Void doInBackground(Void... voids) {
-            this.voids = voids;
+        protected Integer doInBackground(String... noUsat) {
             try {
                 URL url = new URL("http://62.117.232.31/?opcio=0");
-                //URL url = new URL("http://www.android.com");
-                urlEncendre = (HttpURLConnection) url.openConnection();
+                URL = (HttpURLConnection) url.openConnection();
 
+                URL.setConnectTimeout(3000);
 
-                BufferedInputStream in = new BufferedInputStream(urlEncendre.getInputStream());
+                code = URL.getResponseCode();
+                System.out.println(code);
+                in = new BufferedInputStream(URL.getInputStream());
 
+                byte[] contents = new byte[1024];
+                int bytesRead=0;
 
-                //urlEncendre.getResponseCode();
+                while ((bytesRead = in.read(contents)) != -1) {
+                    tornada += new String(contents, 0, bytesRead);
+                }
+
+                System.out.println("Resultat -> " + tornada);
+
             } catch (Exception e) {
-                System.out.println(e.toString());
+                exc = 1;
+                System.out.println("-----------> " + e.getMessage());
             } finally {
-                urlEncendre.disconnect();
+                URL.disconnect();
             }
-            return null;
+            return 0;
+        }
+
+        protected void onPostExecute(Integer valor){
+            String aux = "";
+
+            if(code == 500)
+                estat.setText("Error al connectar amb l'Arduino");
+
+            else if(exc == 0) {
+                aux = (tornada.matches("(.*)encesa(.*)")) ? "Encesa" : "Apagada";
+                estat.setText(aux);
+            }
+
+            else
+                estat.setText("El servidor no respon");
         }
     }
 
-    class apaga extends AsyncTask<Void, Void, Void> {
-        private Void[] voids;
+    class apaga extends AsyncTask<String, Float, Integer> {
+        private int exc = 0;
+        BufferedInputStream in;
+        String tornada = "";
+        int code;
 
-        protected Void doInBackground(Void... voids) {
-            this.voids = voids;
+        protected Integer doInBackground(String... noUsat) {
             try {
                 URL url = new URL("http://62.117.232.31/?opcio=1");
-                urlApagar = (HttpURLConnection) url.openConnection();
+                URL = (HttpURLConnection) url.openConnection();
 
-                BufferedInputStream in = new BufferedInputStream(urlApagar.getInputStream());
+                URL.setConnectTimeout(3000);
+
+                code = URL.getResponseCode();
+                System.out.println(code);
+                in = new BufferedInputStream(URL.getInputStream());
+
+                byte[] contents = new byte[1024];
+                int bytesRead=0;
+
+                while ((bytesRead = in.read(contents)) != -1) {
+                    tornada += new String(contents, 0, bytesRead);
+                }
 
             } catch (Exception e) {
-                System.out.println(e.toString());
+                exc = 1;
+                System.out.println("-----------> " + e.getMessage());
             } finally {
-                urlEncendre.disconnect();
+                URL.disconnect();
             }
-            return null;
+            return 0;
+        }
+
+        protected void onPostExecute(Integer valor){
+            String aux = "";
+
+            if(code == 500)
+                estat.setText("Error al connectar amb l'Arduino");
+
+            else if(exc == 0) {
+                aux = (tornada.matches("(.*)encesa(.*)")) ? "Encesa" : "Apagada";
+                estat.setText(aux);
+            }
+
+            else
+                estat.setText("El servidor no respon");
         }
     }
 
