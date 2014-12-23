@@ -45,6 +45,7 @@ var opcionsNode = stdio.getopt({
 var ipActual = "";
 var requestActual = "";
 var estatPereta = '1';
+var codiError = '0';
 
 var opcionsPython = {
   mode: 'text',
@@ -64,6 +65,7 @@ function creaServer(port, metode){
     console.log("Servidor en marxa! ->", ip.address()
     + ":" + port, "  Mètode:", metode + '\n');
   });
+  
 
   process.on('SIGINT', function(){
     console.log("\nServidor desconnectat.");
@@ -79,7 +81,7 @@ function creaServer(port, metode){
 function iniciaControlador(){
   pyshell = new PythonShell('controlador.py', opcionsPython);
   pyshell.on('error', function(error){
-    estatPereta = 'error';
+    codiError = 1;
     console.log("Error en la comunicació amb l'Arduino. Reiniciar el servidor.\n");
   });
 }
@@ -140,11 +142,11 @@ var serverGet = http.createServer(function(request, response){
   if(requestActual != request &&
           ipActual != request.connection.remoteAddress)
     recuperaIP(request);
-
+  
   var query = url.parse(request.url, true).query;
   var variableget = query.opcio;
 
-  if(variableget != undefined){
+  if(variableget != undefined && codiError == 0){
     estatPereta = variableget;
     console.log(estatPereta);
     variableget += '\n';
@@ -152,10 +154,16 @@ var serverGet = http.createServer(function(request, response){
     pyshell.send(variableget);
   }
 
-  response.writeHead(200, {'Content-Type': 'text/html'});
-  var estat = (estatPereta == '0') ? "encesa" : "apagada";
-  estat = (estatPereta == 'error') ? "error amb Arduino" : estat;
-  response.end(dibuixaHtml(estat));
+  if(codiError == 1){
+    response.writeHead(500, {'Content-Type': 'text/html'});
+    response.end(dibuixaHtml("Error al connectar amb l'Arduino"));
+    process.exit(1);
+  }
+  else{
+    response.writeHead(200, {'Content-Type': 'text/html'});
+    var estat = (estatPereta == '0') ? "encesa" : "apagada";
+    response.end(dibuixaHtml(estat));
+  }
 
 });
 
