@@ -26,12 +26,15 @@ var opcionsNode = stdio.getopt({
     description: 'Port del servidor (4444 per defecte)',
     args: 1
   },
+<<<<<<< HEAD
   'metode': {
     key: 'm',
     description: 'Pot ser Get o Post',
     mandatory: true,
     args: 1
   },
+=======
+>>>>>>> master
   'log': {
     key: 'l',
     description: 'Log de les connexions',
@@ -52,6 +55,7 @@ var opcionsPython = {
   pythonPath: '/usr/bin/python',
   scriptPath: '/home/pi/WWW_ArduinoRele_Raspi'
 };
+<<<<<<< HEAD
 
 
 /************** MÈTODES **************/
@@ -86,6 +90,42 @@ function iniciaControlador(){
   });
 }
 
+=======
+
+
+/************** MÈTODES **************/
+
+function creaServer(port, metode){
+  iniciaControlador();
+
+  server = serverGet;
+
+  server.listen(parseInt(port), function(){
+    console.log("Servidor en marxa! ->", ip.address()
+    + ":" + port + '\n');
+  });
+
+
+  process.on('SIGINT', function(){
+    console.log("\nServidor desconnectat.");
+    process.exit(0);
+  });
+
+  process.on('exit', function(code){
+    acabaControlador();
+    console.log("Codi de sortida:", code);
+  });
+}
+
+function iniciaControlador(){
+  pyshell = new PythonShell('controlador.py', opcionsPython);
+  pyshell.on('error', function(error){
+    codiError = 1;
+    console.log("Error en la comunicació amb l'Arduino. Reiniciar el servidor.\n");
+  });
+}
+
+>>>>>>> master
 function acabaControlador(){
   pyshell.send('e\n');
   pyshell.end(0);
@@ -136,6 +176,7 @@ function dibuixaHtml(estat){
 }
 
 
+<<<<<<< HEAD
 /************** SERVIDORS **************/
 
 var serverGet = http.createServer(function(request, response){
@@ -170,11 +211,40 @@ var serverGet = http.createServer(function(request, response){
 
 var serverPost = http.createServer(function(request, response){
   recuperaIP(request);
+=======
+/************** SERVIDOR **************/
+>>>>>>> master
 
-  if(request.method == "GET"){
-    response.writeHead(200, {'Content-Type': 'text/html'});
-    response.end(form);
+var serverGet = http.createServer(function(request, response){
+  if(requestActual != request &&
+          ipActual != request.connection.remoteAddress)
+    recuperaIP(request);
+
+  var query = url.parse(request.url, true).query;
+  var variableget = query.opcio;
+
+  if(variableget != undefined && codiError == 0){
+    estatPereta = variableget;
+    console.log(estatPereta);
+    variableget += '\n';
+    console.log("Variable get:", variableget);
+    pyshell.send(variableget);
   }
+
+  if(codiError == 1){
+    response.writeHead(500, {'Content-Type': 'text/html'});
+    response.end(dibuixaHtml("Error al connectar amb l'Arduino"));
+    process.exit(1);
+  }
+  else{
+    response.writeHead(200, {'Content-Type': 'text/html'});
+    var estat = (estatPereta == '0') ? "encesa" : "apagada";
+    response.end(dibuixaHtml(estat));
+  }
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 });
 
 

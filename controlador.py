@@ -20,8 +20,8 @@ while 1:
   if ordre == 'e':
 	break
   arduino.write(ordre)
-  
-  
-arduino.write(1)
+
+
+arduino.write('1')
 arduino.close()
 sys.exit()
