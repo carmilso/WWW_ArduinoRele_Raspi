@@ -26,12 +26,6 @@ var opcionsNode = stdio.getopt({
     description: 'Port del servidor (4444 per defecte)',
     args: 1
   },
-  'metode': {
-    key: 'm',
-    description: 'Pot ser Get o Post',
-    mandatory: true,
-    args: 1
-  },
   'log': {
     key: 'l',
     description: 'Log de les connexions',
@@ -59,13 +53,13 @@ var opcionsPython = {
 function creaServer(port, metode){
   iniciaControlador();
 
-  server = (metode.toLowerCase() == "get") ? serverGet : serverPost;
+  server = serverGet;
 
   server.listen(parseInt(port), function(){
     console.log("Servidor en marxa! ->", ip.address()
-    + ":" + port, "  Mètode:", metode + '\n');
+    + ":" + port + '\n');
   });
-  
+
 
   process.on('SIGINT', function(){
     console.log("\nServidor desconnectat.");
@@ -136,13 +130,13 @@ function dibuixaHtml(estat){
 }
 
 
-/************** SERVIDORS **************/
+/************** SERVIDOR **************/
 
 var serverGet = http.createServer(function(request, response){
   if(requestActual != request &&
           ipActual != request.connection.remoteAddress)
     recuperaIP(request);
-  
+
   var query = url.parse(request.url, true).query;
   var variableget = query.opcio;
 
@@ -165,16 +159,6 @@ var serverGet = http.createServer(function(request, response){
     response.end(dibuixaHtml(estat));
   }
 
-});
-
-
-var serverPost = http.createServer(function(request, response){
-  recuperaIP(request);
-
-  if(request.method == "GET"){
-    response.writeHead(200, {'Content-Type': 'text/html'});
-    response.end(form);
-  }
 });
 
 
