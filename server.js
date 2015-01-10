@@ -60,8 +60,8 @@ function creaServer(portLocal, metode){
     ipPublica = (error) ? "Desconeguda" : stdout;
 
     server.listen(parseInt(portLocal), function(){
-      console.log("Servidor en marxa! ->  IP Local:", ip.address()
-      + ":" + portLocal, "IP Pública:", ipPublica + ":80" + '\n');
+      console.log("Servidor en marxa! -> \n\tLocal:", ip.address()
+      + ":" + portLocal, "\n\tPública:", ipPublica + ":80" + '\n');
     });
   });
 
