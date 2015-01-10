@@ -61,7 +61,7 @@ function creaServer(portLocal, metode){
 
     server.listen(parseInt(portLocal), function(){
       console.log("Servidor en marxa! -> \n\tLocal:", ip.address()
-      + ":" + portLocal, "\n\tPública:", ipPublica + ":80" + '\n');
+      + ":" + portLocal, "\n\tPública: " + ipPublica + ":80" + '\n');
     });
   });
 
