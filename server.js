@@ -57,7 +57,7 @@ function creaServer(portLocal, metode){
   server = serverGet;
 
   exec('curl ipv4.icanhazip.com', function(error, stdout, stderr){
-    ipPublica = (error) : "Desconeguda" ? stdout;
+    ipPublica = (error) ? "Desconeguda" : stdout;
 
     server.listen(parseInt(portLocal), function(){
       console.log("Servidor en marxa! ->  IP Local:", ip.address()
