@@ -15,15 +15,16 @@ var url = require('url');
 var fs = require('fs');
 var ip = require('ip');
 var stdio = require('stdio');
+var exec = require('child_process').exec;
 var PythonShell = require('python-shell');
 
 
 /************** ARGUMENTS DEL SERVIDOR **************/
 
 var opcionsNode = stdio.getopt({
-  'port': {
+  'portLocal': {
     key: 'p',
-    description: 'Port del servidor (4444 per defecte)',
+    description: 'port local del servidor (4444 per defecte)',
     args: 1
   },
   'log': {
@@ -50,16 +51,19 @@ var opcionsPython = {
 
 /************** MÈTODES **************/
 
-function creaServer(port, metode){
+function creaServer(portLocal, metode){
   iniciaControlador();
 
   server = serverGet;
 
-  server.listen(parseInt(port), function(){
-    console.log("Servidor en marxa! ->", ip.address()
-    + ":" + port + '\n');
-  });
+  exec('curl ipv4.icanhazip.com', function(error, stdout, stderr){
+    ipPublica = (error) : "Desconeguda" ? stdout;
 
+    server.listen(parseInt(portLocal), function(){
+      console.log("Servidor en marxa! ->  IP Local:", ip.address()
+      + ":" + portLocal, "IP Pública:", ipPublica + ":80" + '\n');
+    });
+  });
 
   process.on('SIGINT', function(){
     console.log("\nServidor desconnectat.");
@@ -166,7 +170,7 @@ var serverGet = http.createServer(function(request, response){
 
 console.log("Iniciant servidor...");
 
-if(opcionsNode.port != undefined)
-  creaServer(opcionsNode.port, opcionsNode.metode);
+if(opcionsNode.portLocal != undefined)
+  creaServer(opcionsNode.portLocal, opcionsNode.metode);
 else
   creaServer(4444, opcionsNode.metode);
