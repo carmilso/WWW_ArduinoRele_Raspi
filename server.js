@@ -146,9 +146,8 @@ var serverGet = http.createServer(function(request, response){
 
   if(variableget != undefined && codiError == 0){
     estatPereta = variableget;
-    console.log(estatPereta);
     variableget += '\n';
-    console.log("Variable get:", variableget);
+    console.log("Ordre obtesa:", variableget);
     pyshell.send(variableget);
   }
 
